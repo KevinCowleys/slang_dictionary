@@ -1,0 +1,6 @@
+<div class="container">
+    <% @slangs.each do |slang_content| %>
+        <%= render '/shared/slang', slang_content: slang_content %>
+    <% end %>
+    <%== pagy_bootstrap_nav(@pagy) %>
+</div>

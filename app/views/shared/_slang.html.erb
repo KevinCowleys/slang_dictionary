@@ -1,0 +1,73 @@
+<div class="card mb-4 rounded-0">
+    <div class="card-body">
+        <h2 class="card-title">
+            <a href="/search?q=<%= slang_content.word %>" class="text-decoration-none">
+                <%= slang_content.word %>
+            </a>
+            <% if !slang_content.is_approved %>
+                <i class="text-muted" style="font-size: 0.8rem;">Waiting for approval...</i>
+            <% end %>
+        </h2>
+        <p class="card-text"><%= slang_content.definition %></p>
+        <div>by <a href="user/<%= slang_content.user.username %>" class="text-decoration-none"><%= slang_content.user.username %></a> - <%= slang_content.created_at.strftime("%d %B %Y") %></div>
+        <div>
+            <%= form_with model: @vote, url: slang_like_path, class: 'd-inline' do |f| %>
+                <%= f.hidden_field :slang_id, value: slang_content.id  %>
+                <% if Current.user && Vote.find_by(user_id: Current.user.id, slang_id: slang_content.id, upvote: true) %>
+                    <input type="hidden" name="is_liked" value="true">
+                    <button class="btn upvote-button" type="submit" name="commit">
+                        <span class="position-relative">
+                            <div class="position-absolute shadow-hover"></div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+                            </svg>
+                        </span>
+                        &nbsp;
+                        <%= slang_content.votes.where(upvote: true).count.to_s %>
+                    </button>
+                <% else %>
+                    <input type="hidden" name="is_liked">
+                    <button class="btn upvote-button" type="submit" name="commit">
+                        <span class="position-relative">
+                            <div class="position-absolute shadow-hover"></div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up" viewBox="0 0 16 16">
+                                <path d="M3.204 11h9.592L8 5.519 3.204 11zm-.753-.659 4.796-5.48a1 1 0 0 1 1.506 0l4.796 5.48c.566.647.106 1.659-.753 1.659H3.204a1 1 0 0 1-.753-1.659z"/>
+                            </svg>
+                        </span>
+                        &nbsp;
+                        <%= slang_content.votes.where(upvote: true).count.to_s %>
+                    </button>
+                <% end %>
+            <% end %>
+            <%= form_with model: @vote, url: slang_like_path, class: 'd-inline' do |f| %>
+                <%= f.hidden_field :slang_id, value: slang_content.id  %>
+                <% if Current.user && Vote.find_by(user_id: Current.user.id, slang_id: slang_content.id, upvote: false) %>
+                    <input type="hidden" name="is_unliked" value="true">
+                    <button class="btn downvote-button" type="submit" name="commit">
+                        <span class="position-relative">
+                            <div class="position-absolute shadow-hover"></div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                            </svg>
+                        </span>
+                        &nbsp;
+                        <%= slang_content.votes.where(upvote: false).count.to_s %>
+                    </button>
+                <% else %>
+                    <input type="hidden" name="is_unliked">
+                    <button class="btn downvote-button" type="submit" name="commit">
+                        <span class="position-relative">
+                            <div class="position-absolute shadow-hover"></div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+                                <path d="M3.204 5h9.592L8 10.481 3.204 5zm-.753.659 4.796 5.48a1 1 0 0 0 1.506 0l4.796-5.48c.566-.647.106-1.659-.753-1.659H3.204a1 1 0 0 0-.753 1.659z"/>
+                            </svg>
+                        </span>
+                        &nbsp;
+                        <%= slang_content.votes.where(upvote: false).count.to_s %>
+                    </button>
+                <% end %>
+            <% end %>
+        </div>
+    <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+    </div>
+</div>

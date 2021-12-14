@@ -1,0 +1,16 @@
+.shadow-hover {
+    border-radius: 30px;
+    margin: -8px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.upvote-button:hover .shadow-hover {
+    background: rgba(29, 155, 240, 0.1);
+}
+
+.downvote-button:hover .shadow-hover {
+    background: rgba(240, 29, 29, 0.1);
+}

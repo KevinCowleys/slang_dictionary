@@ -1,0 +1,20 @@
+<div class="signup-form">
+    <%= form_with model: @slang, url: slang_create_path do |f| %>
+        <div class="row">
+            <div class="col-8 offset-4">
+                <h2>Add Slang</h2>
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <%= f.label :word, 'Word', class: 'col-form-label col-4' %>
+            <%= f.text_field :word, class: 'form-control', required: true %>
+        </div>
+        <div class="form-group mb-3">
+            <%= f.label :definition, 'Definition', class: 'col-form-label col-4' %>
+            <%= f.text_area :definition, class: 'form-control', required: true, placeholder: 'Type your definition here...' %>
+        </div>
+        <div class="form-group mb-3 text-center">
+            <%= f.submit 'Post', class: 'btn btn-primary btn-lg w-50' %>
+        </div>
+    <% end %>
+</div>

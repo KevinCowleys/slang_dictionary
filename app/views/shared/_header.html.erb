@@ -1,0 +1,35 @@
+<header class="py-3 mb-3 border-bottom bg-dark">
+    <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 60px 2fr;">
+        <%= link_to 'Home', root_path, class: 'mb-2 mb-lg-0 link-light text-decoration-none' %>
+
+      <div class="d-flex align-items-center">
+        <%= form_with(url: search_path, method: :get, class: 'w-100 me-3') do |f| %>
+            <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="q" value="<%= params[:q] %>">
+        <% end %>
+        <% if Current.user%>
+            <div class="flex-shrink-0 dropdown">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                    <%= image_tag 'profile_image.png', height: 32, width: 32, class: 'rounded-circle' %>
+                </a>
+                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                    <% if Current.user.is_admin %>
+                        <li>
+                            <%= button_to 'Admin', admin_path, method: :get, class: 'dropdown-item' %>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                    <% end %>
+                    <li><a class="dropdown-item" href="<%= slang_new_path %>">New slang...</a></li>
+                    <li><a class="dropdown-item" href="/user/<%= Current.user.username %>">Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <%= button_to 'Sign out', logout_path, method: :delete, class: 'dropdown-item' %>
+                    </li>
+                </ul>
+            </div>
+        <% else %>
+            <%= link_to 'Sign Up', sign_up_path, class: 'link-light text-decoration-none text-nowrap me-2' %>
+            <%= link_to 'Login', sign_in_path, class: 'link-light text-decoration-none text-nowrap' %>
+        <% end %>
+      </div>
+    </div>
+</header>
